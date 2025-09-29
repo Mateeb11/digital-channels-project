@@ -1,0 +1,11 @@
+.row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr 4fr;
+
+  .data,
+  .title {
+    border: 1px solid black;
+    padding: 1em;
+  }
+}
