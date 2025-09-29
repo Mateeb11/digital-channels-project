@@ -16,6 +16,11 @@ export default function Form() {
     console.log(age.current?.value);
     console.log(gender.current?.value);
 
+    localStorage.setItem("name", JSON.stringify(name.current?.value));
+    localStorage.setItem("email", JSON.stringify(email.current?.value));
+    localStorage.setItem("age", JSON.stringify(age.current?.value));
+    localStorage.setItem("gender", JSON.stringify(gender.current?.value));
+
     form.current?.reset();
   };
   return (
