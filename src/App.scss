@@ -35,3 +35,16 @@ button,
 a {
   cursor: pointer;
 }
+
+.app {
+  display: grid;
+  gap: 4.875em;
+
+  margin: 0.625em;
+
+  @media (min-width: 768px) {
+    & {
+      margin: 3.125em;
+    }
+  }
+}

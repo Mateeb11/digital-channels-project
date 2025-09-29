@@ -1,18 +1,23 @@
 import classes from "./Navigation.module.scss";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Navigation() {
+  const location = useLocation();
   return (
-    <>
-      <ul>
-        <li>
+    <nav>
+      <ul className={classes.nav}>
+        <li
+          className={`${location.pathname !== "/table" ? classes.active : ""}`}
+        >
           <Link to={"/form"}>Form</Link>
         </li>
-        <li>
+        <li
+          className={`${location.pathname === "/table" ? classes.active : ""}`}
+        >
           <Link to={"/table"}>Table</Link>
         </li>
       </ul>
-    </>
+    </nav>
   );
 }

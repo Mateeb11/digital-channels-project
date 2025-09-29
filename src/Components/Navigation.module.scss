@@ -1,0 +1,27 @@
+.nav {
+  display: grid;
+  grid-auto-flow: column;
+
+  gap: 1em;
+
+  li {
+    list-style-type: none;
+    display: flex;
+    a {
+      text-align: center;
+      width: 100%;
+
+      text-decoration: none;
+      padding: 1em;
+
+      background-color: gray;
+      color: white;
+    }
+  }
+
+  .active {
+    a {
+      background-color: lightslategrey;
+    }
+  }
+}
