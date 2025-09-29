@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
 import classes from "./Navigation.module.scss";
+
+import { Link } from "react-router-dom";
 
 export default function Navigation() {
   return (
