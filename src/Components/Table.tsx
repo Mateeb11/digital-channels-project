@@ -1,5 +1,6 @@
 import { useState } from "react";
 import classes from "./Table.module.scss";
+import Form from "./Form";
 
 export default function Table() {
   // const [name, setName] = useState(localStorage.getItem("name"));
@@ -18,6 +19,7 @@ export default function Table() {
   };
   return mode ? (
     <>
+      <Form edit={true} />
       <button onClick={modeHandler}>Cancel</button>
     </>
   ) : (

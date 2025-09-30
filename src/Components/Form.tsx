@@ -1,48 +1,95 @@
-import { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import classes from "./Form.module.scss";
 
-export default function Form() {
-  const name = useRef<HTMLInputElement>(null);
-  const email = useRef<HTMLInputElement>(null);
-  const gender = useRef<HTMLInputElement>(null);
-  const age = useRef<HTMLSelectElement>(null);
+type editModeValues = {
+  edit?: boolean;
+};
 
-  const form = useRef<HTMLFormElement>(null);
+export default function Form({ edit = false }: editModeValues) {
+  const [name, setName] = useState<string>();
+  const [email, setEmail] = useState<string>();
+  const [age, setAge] = useState<string>();
+  const [gender, setGender] = useState<string>();
+
+  useEffect(() => {
+    if (edit) {
+      setName(localStorage.getItem("name") || "");
+      setEmail(localStorage.getItem("email") || "");
+      setAge(localStorage.getItem("age") || "");
+      setGender(localStorage.getItem("gender") || "");
+    }
+  }, [edit]);
 
   const sendData = (e: React.FormEvent) => {
     e?.preventDefault();
-    console.log(name.current?.value);
-    console.log(email.current?.value);
-    console.log(age.current?.value);
-    console.log(gender.current?.value);
 
-    localStorage.setItem("name", JSON.stringify(name.current?.value));
-    localStorage.setItem("email", JSON.stringify(email.current?.value));
-    localStorage.setItem("age", JSON.stringify(age.current?.value));
-    localStorage.setItem("gender", JSON.stringify(gender.current?.value));
+    localStorage.setItem("name", JSON.stringify(name));
+    localStorage.setItem("email", JSON.stringify(email));
+    localStorage.setItem("age", JSON.stringify(age));
+    localStorage.setItem("gender", JSON.stringify(gender));
 
-    form.current?.reset();
+    setName("");
+    setEmail("");
+    setAge("");
+    setGender("");
   };
+
   return (
     <>
-      <form ref={form} onSubmit={sendData} className={`${""}`} id="contact">
-        <input required ref={name} type="text" title="Name"></input>
-        <input required ref={email} type="email" title="Email"></input>
-        <select required ref={age} name="age" id="ages">
+      <form onSubmit={sendData} className={`${""}`} id="contact">
+        <input
+          required
+          value={name || ""}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            setName(e.target.value);
+          }}
+          type="text"
+          title="Name"
+        ></input>
+        <input
+          required
+          value={email || ""}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            setEmail(e.target.value);
+          }}
+          type="email"
+          title="Email"
+        ></input>
+        <select
+          required
+          value={age}
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+            setAge(e.target.value);
+          }}
+          name="age"
+          id="ages"
+        >
           <option value="- 10">- 10</option>
           <option value="10 - 35">11 - 35</option>
           <option value="+ 35">+ 35</option>
         </select>
         <input
-          ref={gender}
-          defaultChecked
+          required
+          checked={gender === "Male"}
+          value="Male"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            setGender(e.target.value);
+          }}
           id="Male"
           type="radio"
           name="gender"
-          value="Male"
         ></input>
         <label htmlFor="Male">Male</label>
-        <input id="Female" type="radio" name="gender" value="Female"></input>
+        <input
+          checked={gender === "Female"}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            setGender(e.target.value);
+          }}
+          id="Female"
+          type="radio"
+          name="gender"
+          value="Female"
+        ></input>
         <label htmlFor="Female">Female</label>
 
         <button type="submit">Submit</button>
