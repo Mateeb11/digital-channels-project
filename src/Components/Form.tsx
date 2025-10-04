@@ -35,13 +35,16 @@ export default function Form({ edit = false }: editModeValues) {
     setEmail("");
     setAge("");
     setGender("");
+
+    alert("Data saved in localStorage Successfully");
   };
 
   return (
     <>
-      <form onSubmit={sendData} className={`${""}`} id="contact">
+      <form onSubmit={sendData} className={classes.form} id="contact">
         <input
           required
+          placeholder="Your Name"
           value={name || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setName(e.target.value);
@@ -51,6 +54,7 @@ export default function Form({ edit = false }: editModeValues) {
         ></input>
         <input
           required
+          placeholder="Your Email"
           value={email || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setEmail(e.target.value);
@@ -74,31 +78,39 @@ export default function Form({ edit = false }: editModeValues) {
           <option value="10 - 35">11 - 35</option>
           <option value="+ 35">+ 35</option>
         </select>
-        <input
-          required
-          checked={gender === "Male"}
-          value="Male"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setGender(e.target.value);
-          }}
-          id="Male"
-          type="radio"
-          name="gender"
-        ></input>
-        <label htmlFor="Male">Male</label>
-        <input
-          checked={gender === "Female"}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setGender(e.target.value);
-          }}
-          id="Female"
-          type="radio"
-          name="gender"
-          value="Female"
-        ></input>
-        <label htmlFor="Female">Female</label>
+        <div className={classes.radio}>
+          <div>
+            <input
+              required
+              checked={gender === "Male"}
+              value="Male"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setGender(e.target.value);
+              }}
+              id="Male"
+              type="radio"
+              name="gender"
+            ></input>
+            <label htmlFor="Male">Male</label>
+          </div>
+          <div>
+            <input
+              checked={gender === "Female"}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setGender(e.target.value);
+              }}
+              id="Female"
+              type="radio"
+              name="gender"
+              value="Female"
+            ></input>
+            <label htmlFor="Female">Female</label>
+          </div>
+        </div>
 
-        <button type="submit">Submit</button>
+        <button type="submit" className={classes.submitButton}>
+          Submit
+        </button>
       </form>
     </>
   );
