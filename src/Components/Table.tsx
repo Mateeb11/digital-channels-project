@@ -63,7 +63,7 @@ export default function Table() {
 
   return mode ? (
     <>
-      <Form edit={true} />
+      <Form edit={true} setEdit={setMode} />
       <button className={classes.actionButton} onClick={modeHandler}>
         Cancel
       </button>

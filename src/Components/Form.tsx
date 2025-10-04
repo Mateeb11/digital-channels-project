@@ -3,9 +3,13 @@ import classes from "./Form.module.scss";
 
 type editModeValues = {
   edit?: boolean;
+  setEdit?: any;
 };
 
-export default function Form({ edit = false }: editModeValues) {
+export default function Form({
+  edit = false,
+  setEdit = () => {},
+}: editModeValues) {
   const [name, setName] = useState<string>();
   const [email, setEmail] = useState<string>();
   const [age, setAge] = useState<string>("");
@@ -35,6 +39,8 @@ export default function Form({ edit = false }: editModeValues) {
     setEmail("");
     setAge("");
     setGender("");
+
+    edit && setEdit(false);
 
     alert("Data saved in localStorage Successfully");
   };
