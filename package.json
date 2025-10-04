@@ -1,15 +1,18 @@
 {
   "name": "digital-channels-project",
   "private": true,
+  "homepage": "https://mateeb11.github.io/digital-channels-project/",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "./node_modules/.bin/gh-pages -d dist"
   },
   "dependencies": {
+    "gh-pages": "^6.3.0",
     "node": "^24.9.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
