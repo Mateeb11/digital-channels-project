@@ -26,12 +26,20 @@ export default function Table() {
     <main className={classes.container}>
       <div className={classes.row}>
         <div className={classes.title}>Name</div>
-        <div className={classes.data}>{localStorage.getItem("name")}</div>
+        <div className={classes.data}>
+          {JSON.parse(localStorage.getItem("name")!)}
+        </div>
       </div>
 
-      <div className={classes.row}>{localStorage.getItem("email")}</div>
-      <div className={classes.row}>{localStorage.getItem("age")}</div>
-      <div className={classes.row}>{localStorage.getItem("gender")}</div>
+      <div className={classes.row}>
+        {JSON.parse(localStorage.getItem("email")!)}
+      </div>
+      <div className={classes.row}>
+        {JSON.parse(localStorage.getItem("age")!)}
+      </div>
+      <div className={classes.row}>
+        {JSON.parse(localStorage.getItem("gender")!)}
+      </div>
 
       <button onClick={deleteHandler}>Delete</button>
       <button onClick={modeHandler}>Edit</button>

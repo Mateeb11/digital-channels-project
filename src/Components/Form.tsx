@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./Form.module.scss";
 
 type editModeValues = {
@@ -13,10 +13,10 @@ export default function Form({ edit = false }: editModeValues) {
 
   useEffect(() => {
     if (edit) {
-      setName(localStorage.getItem("name") || "");
-      setEmail(localStorage.getItem("email") || "");
-      setAge(localStorage.getItem("age") || "");
-      setGender(localStorage.getItem("gender") || "");
+      setName(JSON.parse(localStorage.getItem("name")!));
+      setEmail(JSON.parse(localStorage.getItem("email")!));
+      setAge(JSON.parse(localStorage.getItem("age")!));
+      setGender(JSON.parse(localStorage.getItem("gender")!));
     }
   }, [edit]);
 
