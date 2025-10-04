@@ -1,26 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import classes from "./Table.module.scss";
 import Form from "./Form";
 
 export default function Table() {
-  // const [name, setName] = useState(localStorage.getItem("name"));
-  // const [email, setemail] = useState(localStorage.getItem("email"));
-  // const [age, setAge] = useState(localStorage.getItem("age"));
-  // const [gender, setGender] = useState(localStorage.getItem("gender"));
-
   const [mode, setMode] = useState(false);
+  const [isLocalStorageEmpty, setIsLocalStorageEmpty] = useState(false);
+
+  useEffect(() => {
+    // for isLocalStorageEmpty initial value
+    setIsLocalStorageEmpty(
+      localStorage.getItem("name") === null ? true : false
+    );
+  });
 
   const modeHandler = () => {
     setMode(!mode);
   };
   const deleteHandler = () => {
     localStorage.clear();
+    setIsLocalStorageEmpty(true);
   };
-  return mode ? (
-    <>
-      <Form edit={true} />
-      <button onClick={modeHandler}>Cancel</button>
-    </>
+
+  const tableContent = isLocalStorageEmpty ? (
+    <>No Data</>
   ) : (
     <main className={classes.container}>
       <div className={classes.row}>
@@ -43,5 +45,14 @@ export default function Table() {
       <button onClick={deleteHandler}>Delete</button>
       <button onClick={modeHandler}>Edit</button>
     </main>
+  );
+
+  return mode ? (
+    <>
+      <Form edit={true} />
+      <button onClick={modeHandler}>Cancel</button>
+    </>
+  ) : (
+    tableContent
   );
 }
