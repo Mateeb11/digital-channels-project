@@ -50,7 +50,9 @@ export default function Table() {
   return mode ? (
     <>
       <Form edit={true} />
-      <button onClick={modeHandler}>Cancel</button>
+      <button className={classes.cancelButton} onClick={modeHandler}>
+        Cancel
+      </button>
     </>
   ) : (
     tableContent

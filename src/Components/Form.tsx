@@ -109,7 +109,7 @@ export default function Form({ edit = false }: editModeValues) {
         </div>
 
         <button type="submit" className={classes.submitButton}>
-          Submit
+          {edit ? "Edit" : "Submit"}
         </button>
       </form>
     </>
