@@ -33,24 +33,38 @@ export default function Table() {
       </div>
 
       <div className={classes.row}>
-        {JSON.parse(localStorage.getItem("email")!)}
+        <div className={classes.title}>Email</div>
+        <div className={classes.data}>
+          {JSON.parse(localStorage.getItem("email")!)}
+        </div>
       </div>
       <div className={classes.row}>
-        {JSON.parse(localStorage.getItem("age")!)}
+        <div className={classes.title}>Age</div>
+        <div className={classes.data}>
+          {JSON.parse(localStorage.getItem("age")!)}
+        </div>
       </div>
       <div className={classes.row}>
-        {JSON.parse(localStorage.getItem("gender")!)}
+        <div className={classes.title}>Gender</div>
+        <div className={classes.data}>
+          {JSON.parse(localStorage.getItem("gender")!)}
+        </div>
       </div>
-
-      <button onClick={deleteHandler}>Delete</button>
-      <button onClick={modeHandler}>Edit</button>
+      <div className={classes.actionButtons}>
+        <button className={classes.actionButton} onClick={deleteHandler}>
+          Delete
+        </button>
+        <button className={classes.actionButton} onClick={modeHandler}>
+          Edit
+        </button>
+      </div>
     </main>
   );
 
   return mode ? (
     <>
       <Form edit={true} />
-      <button className={classes.cancelButton} onClick={modeHandler}>
+      <button className={classes.actionButton} onClick={modeHandler}>
         Cancel
       </button>
     </>
