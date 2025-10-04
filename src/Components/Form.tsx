@@ -8,10 +8,11 @@ type editModeValues = {
 export default function Form({ edit = false }: editModeValues) {
   const [name, setName] = useState<string>();
   const [email, setEmail] = useState<string>();
-  const [age, setAge] = useState<string>();
+  const [age, setAge] = useState<string>("");
   const [gender, setGender] = useState<string>();
 
   useEffect(() => {
+    // if it edit page, it will set the values to the localstorage values
     if (edit) {
       setName(JSON.parse(localStorage.getItem("name")!));
       setEmail(JSON.parse(localStorage.getItem("email")!));
@@ -21,6 +22,7 @@ export default function Form({ edit = false }: editModeValues) {
   }, [edit]);
 
   const sendData = (e: React.FormEvent) => {
+    // store data in localstorage if form is submitted
     e?.preventDefault();
 
     localStorage.setItem("name", JSON.stringify(name));
@@ -28,6 +30,7 @@ export default function Form({ edit = false }: editModeValues) {
     localStorage.setItem("age", JSON.stringify(age));
     localStorage.setItem("gender", JSON.stringify(gender));
 
+    // reset data
     setName("");
     setEmail("");
     setAge("");
@@ -64,6 +67,9 @@ export default function Form({ edit = false }: editModeValues) {
           name="age"
           id="ages"
         >
+          <option value="" disabled>
+            Please Select Your Age Range
+          </option>
           <option value="- 10">- 10</option>
           <option value="10 - 35">11 - 35</option>
           <option value="+ 35">+ 35</option>
