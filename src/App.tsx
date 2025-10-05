@@ -7,7 +7,7 @@ import RootLayout from "./Components/Root";
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/digital-channels-project",
+      path: "/digital-channels-project/",
       element: <RootLayout />,
 
       children: [
