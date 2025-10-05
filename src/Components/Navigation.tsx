@@ -8,14 +8,22 @@ export default function Navigation() {
     <nav>
       <ul className={classes.nav}>
         <li
-          className={`${location.pathname !== "/table" ? classes.active : ""}`}
+          className={`${
+            location.pathname !== "/digital-channels-project/table"
+              ? classes.active
+              : ""
+          }`}
         >
-          <Link to={"/form"}>Form</Link>
+          <Link to={"/digital-channels-project/form"}>Form</Link>
         </li>
         <li
-          className={`${location.pathname === "/table" ? classes.active : ""}`}
+          className={`${
+            location.pathname === "/digital-channels-project/table"
+              ? classes.active
+              : ""
+          }`}
         >
-          <Link to={"/table"}>Table</Link>
+          <Link to={"/digital-channels-project/table"}>Table</Link>
         </li>
       </ul>
     </nav>

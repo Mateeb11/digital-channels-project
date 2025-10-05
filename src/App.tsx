@@ -7,13 +7,17 @@ import RootLayout from "./Components/Root";
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "/digital-channels-project",
       element: <RootLayout />,
 
       children: [
         { index: true, element: <Form /> },
-        { index: true, path: "/form", element: <Form /> },
-        { path: "/table", element: <Table /> },
+        {
+          index: true,
+          path: "/digital-channels-project/form",
+          element: <Form />,
+        },
+        { path: "/digital-channels-project/table", element: <Table /> },
       ],
     },
   ]);
