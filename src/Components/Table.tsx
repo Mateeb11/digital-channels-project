@@ -14,7 +14,7 @@ export default function Table() {
     //   localStorage.getItem("name") === null ? true : false
     // );
     setTableArray(JSON.parse(localStorage.getItem("tableArray") || "[]"));
-  }, []);
+  }, [mode]);
 
   const modeHandler = (i: number) => {
     setMode(!mode);
