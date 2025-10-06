@@ -4,11 +4,13 @@ import classes from "./Form.module.scss";
 type editModeValues = {
   edit?: boolean;
   setEdit?: any;
+  editIndex?: number;
 };
 
 export default function Form({
   edit = false,
   setEdit = () => {},
+  editIndex = -1,
 }: editModeValues) {
   const [name, setName] = useState<string>();
   const [email, setEmail] = useState<string>();
@@ -18,10 +20,14 @@ export default function Form({
   useEffect(() => {
     // if it edit page, it will set the values to the localstorage values
     if (edit) {
-      setName(JSON.parse(localStorage.getItem("name")!));
-      setEmail(JSON.parse(localStorage.getItem("email")!));
-      setAge(JSON.parse(localStorage.getItem("age")!));
-      setGender(JSON.parse(localStorage.getItem("gender")!));
+      let selectedEditValue = JSON.parse(
+        localStorage.getItem("tableArray") || "[]"
+      ).splice(editIndex, 1);
+      console.log(selectedEditValue[0].name);
+      setName(selectedEditValue[0].name);
+      setEmail(selectedEditValue[0].email);
+      setAge(selectedEditValue[0].age);
+      setGender(selectedEditValue[0].gender);
     }
   }, [edit]);
 
@@ -29,21 +35,26 @@ export default function Form({
     // store data in localstorage if form is submitted
     e?.preventDefault();
 
-    localStorage.setItem(
-      "tableArray",
-      JSON.stringify([
-        ...JSON.parse(localStorage.getItem("tableArray") || "[]"),
-        { name, email, age, gender },
-      ])
-    );
+    if (edit) {
+      let newEditArray = JSON.parse(localStorage.getItem("tableArray") || "[]");
+      newEditArray[editIndex] = { name, email, age, gender };
+      localStorage.setItem("tableArray", JSON.stringify(newEditArray));
+      setEdit(false);
+    } else {
+      localStorage.setItem(
+        "tableArray",
+        JSON.stringify([
+          ...JSON.parse(localStorage.getItem("tableArray") || "[]"),
+          { name, email, age, gender },
+        ])
+      );
+    }
 
     // reset data
     setName("");
     setEmail("");
     setAge("");
     setGender("");
-
-    edit && setEdit(false);
 
     alert("Data saved in localStorage Successfully");
   };

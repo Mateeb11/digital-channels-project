@@ -4,7 +4,8 @@ import Form from "./Form";
 
 export default function Table() {
   const [tableArray, setTableArray] = useState([]);
-  const [mode, setMode] = useState(false);
+  const [mode, setMode] = useState<boolean>(false);
+  const [editIndex, setEditIndex] = useState<number>(0);
   const [isLocalStorageEmpty, setIsLocalStorageEmpty] = useState(false);
 
   useEffect(() => {
@@ -15,8 +16,9 @@ export default function Table() {
     setTableArray(JSON.parse(localStorage.getItem("tableArray") || "[]"));
   }, []);
 
-  const modeHandler = () => {
+  const modeHandler = (i: number) => {
     setMode(!mode);
+    setEditIndex(i);
   };
   const deleteHandler = (i: number) => {
     tableArray.splice(i, 1);
@@ -31,7 +33,7 @@ export default function Table() {
     <main className={classes.container}>
       {tableArray.map((item: any, i: number) => (
         <div className={classes.user} key={i}>
-          {/* <div className={classes.userTitle}>{i + 1}</div> */}
+          <div className={classes.userTitle}>{i + 1}</div>
           <div className={classes.userContainer}>
             <span className={classes.title}>Name</span>
             <span className={classes.data}>{item.name}</span>
@@ -56,7 +58,12 @@ export default function Table() {
             >
               Delete
             </button>
-            <button className={classes.actionButton} onClick={modeHandler}>
+            <button
+              className={classes.actionButton}
+              onClick={() => {
+                modeHandler(i);
+              }}
+            >
               Edit
             </button>
           </div>
@@ -67,8 +74,13 @@ export default function Table() {
 
   return mode ? (
     <>
-      <Form edit={true} setEdit={setMode} />
-      <button className={classes.actionButton} onClick={modeHandler}>
+      <Form edit={true} setEdit={setMode} editIndex={editIndex} />
+      <button
+        className={classes.actionButton}
+        onClick={() => {
+          setMode(false);
+        }}
+      >
         Cancel
       </button>
     </>
