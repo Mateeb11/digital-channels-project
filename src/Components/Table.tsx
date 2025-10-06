@@ -10,9 +10,7 @@ export default function Table() {
 
   useEffect(() => {
     // for isLocalStorageEmpty initial value
-    // setIsLocalStorageEmpty(
-    //   localStorage.getItem("name") === null ? true : false
-    // );
+    setIsLocalStorageEmpty(getLocalStorageStatus() ? true : false);
     setTableArray(JSON.parse(localStorage.getItem("tableArray") || "[]"));
   }, [mode]);
 
@@ -24,7 +22,11 @@ export default function Table() {
     tableArray.splice(i, 1);
     setTableArray([...tableArray]);
     localStorage.setItem("tableArray", JSON.stringify(tableArray));
-    // setIsLocalStorageEmpty(true);
+    getLocalStorageStatus() && setIsLocalStorageEmpty(true);
+  };
+
+  const getLocalStorageStatus = () => {
+    return JSON.parse(localStorage.getItem("tableArray") || "[]")?.length === 0;
   };
 
   const tableContent = isLocalStorageEmpty ? (
