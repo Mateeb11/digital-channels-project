@@ -18,9 +18,11 @@ export default function Table() {
   const modeHandler = () => {
     setMode(!mode);
   };
-  const deleteHandler = () => {
-    localStorage.clear();
-    setIsLocalStorageEmpty(true);
+  const deleteHandler = (i: number) => {
+    tableArray.splice(i, 1);
+    setTableArray([...tableArray]);
+    localStorage.setItem("tableArray", JSON.stringify(tableArray));
+    // setIsLocalStorageEmpty(true);
   };
 
   const tableContent = isLocalStorageEmpty ? (
@@ -29,7 +31,7 @@ export default function Table() {
     <main className={classes.container}>
       {tableArray.map((item: any, i: number) => (
         <div className={classes.user} key={i}>
-          <div className={classes.userTitle}>{i + 1}</div>
+          {/* <div className={classes.userTitle}>{i + 1}</div> */}
           <div className={classes.userContainer}>
             <span className={classes.title}>Name</span>
             <span className={classes.data}>{item.name}</span>
@@ -46,17 +48,20 @@ export default function Table() {
             <span className={classes.title}>Gender</span>
             <span className={classes.data}>{item.gender}</span>
           </div>
+
+          <div className={classes.actionButtons}>
+            <button
+              className={classes.actionButton}
+              onClick={() => deleteHandler(i)}
+            >
+              Delete
+            </button>
+            <button className={classes.actionButton} onClick={modeHandler}>
+              Edit
+            </button>
+          </div>
         </div>
       ))}
-
-      <div className={classes.actionButtons}>
-        <button className={classes.actionButton} onClick={deleteHandler}>
-          Delete
-        </button>
-        <button className={classes.actionButton} onClick={modeHandler}>
-          Edit
-        </button>
-      </div>
     </main>
   );
 
