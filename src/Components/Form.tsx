@@ -16,7 +16,7 @@ export default function Form({
   const [email, setEmail] = useState<string>();
   const [age, setAge] = useState<string>("");
   const [gender, setGender] = useState<string>();
-  const [file, setFile] = useState<string | ArrayBuffer | null>();
+  const [file, setFile] = useState<string | ArrayBuffer | null>(null);
 
   useEffect(() => {
     // if it edit page, it will set the values to the localstorage values
@@ -24,7 +24,7 @@ export default function Form({
       let selectedEditValue = JSON.parse(
         localStorage.getItem("tableArray") || "[]"
       ).splice(editIndex, 1);
-      console.log(selectedEditValue[0].name);
+
       setName(selectedEditValue[0].name);
       setEmail(selectedEditValue[0].email);
       setAge(selectedEditValue[0].age);
@@ -47,7 +47,19 @@ export default function Form({
 
     if (edit) {
       let newEditArray = JSON.parse(localStorage.getItem("tableArray") || "[]");
-      newEditArray[editIndex] = { name, email, age, gender, file };
+
+      if (file !== null) {
+        newEditArray[editIndex] = { name, email, age, gender, file };
+      } else {
+        newEditArray[editIndex] = {
+          name,
+          email,
+          age,
+          gender,
+          file: newEditArray[editIndex].file,
+        };
+      }
+
       localStorage.setItem("tableArray", JSON.stringify(newEditArray));
       setEdit(false);
     } else {
@@ -138,7 +150,12 @@ export default function Form({
             <label htmlFor="Female">Female</label>
           </div>
         </div>
-        <input required type="file" accept="image/*" onChange={fileHandler} />
+        <input
+          required={!edit}
+          type="file"
+          accept="image/*"
+          onChange={fileHandler}
+        />
 
         <button type="submit" className={classes.submitButton}>
           {edit ? "Edit" : "Submit"}

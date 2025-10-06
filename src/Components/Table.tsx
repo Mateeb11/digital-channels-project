@@ -52,6 +52,12 @@ export default function Table() {
             <span className={classes.title}>Gender</span>
             <span className={classes.data}>{item.gender}</span>
           </div>
+          <div className={classes.userContainer}>
+            <span className={classes.title}>File</span>
+            <span className={classes.data}>
+              <img src={item.file} width="200px" height="200px" />
+            </span>
+          </div>
 
           <div className={classes.actionButtons}>
             <button
