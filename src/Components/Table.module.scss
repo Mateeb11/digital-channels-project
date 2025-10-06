@@ -2,15 +2,24 @@
   display: grid;
   gap: 2em;
 
-  .row {
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: 1fr 6fr;
+  .user {
+    padding: 1em;
 
-    .data,
-    .title {
-      border: 1px solid black;
-      padding: 1em;
+    border: 1px solid black;
+    border-radius: 0.5em;
+
+    .userTitle {
+      margin-bottom: 1em;
+    }
+    .userContainer {
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-columns: 1fr 6fr;
+      .data,
+      .title {
+        border: 1px solid black;
+        padding: 1em;
+      }
     }
   }
   .actionButtons {

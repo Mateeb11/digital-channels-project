@@ -29,10 +29,13 @@ export default function Form({
     // store data in localstorage if form is submitted
     e?.preventDefault();
 
-    localStorage.setItem("name", JSON.stringify(name));
-    localStorage.setItem("email", JSON.stringify(email));
-    localStorage.setItem("age", JSON.stringify(age));
-    localStorage.setItem("gender", JSON.stringify(gender));
+    localStorage.setItem(
+      "tableArray",
+      JSON.stringify([
+        ...JSON.parse(localStorage.getItem("tableArray") || "[]"),
+        { name, email, age, gender },
+      ])
+    );
 
     // reset data
     setName("");

@@ -3,15 +3,17 @@ import classes from "./Table.module.scss";
 import Form from "./Form";
 
 export default function Table() {
+  const [tableArray, setTableArray] = useState([]);
   const [mode, setMode] = useState(false);
   const [isLocalStorageEmpty, setIsLocalStorageEmpty] = useState(false);
 
   useEffect(() => {
     // for isLocalStorageEmpty initial value
-    setIsLocalStorageEmpty(
-      localStorage.getItem("name") === null ? true : false
-    );
-  });
+    // setIsLocalStorageEmpty(
+    //   localStorage.getItem("name") === null ? true : false
+    // );
+    setTableArray(JSON.parse(localStorage.getItem("tableArray") || "[]"));
+  }, []);
 
   const modeHandler = () => {
     setMode(!mode);
@@ -25,31 +27,28 @@ export default function Table() {
     <>No Data</>
   ) : (
     <main className={classes.container}>
-      <div className={classes.row}>
-        <div className={classes.title}>Name</div>
-        <div className={classes.data}>
-          {JSON.parse(localStorage.getItem("name")!)}
+      {tableArray.map((item: any, i: number) => (
+        <div className={classes.user} key={i}>
+          <div className={classes.userTitle}>{i + 1}</div>
+          <div className={classes.userContainer}>
+            <span className={classes.title}>Name</span>
+            <span className={classes.data}>{item.name}</span>
+          </div>
+          <div className={classes.userContainer}>
+            <span className={classes.title}>Email</span>
+            <span className={classes.data}>{item.email}</span>
+          </div>
+          <div className={classes.userContainer}>
+            <span className={classes.title}>Age</span>
+            <span className={classes.data}>{item.age}</span>
+          </div>
+          <div className={classes.userContainer}>
+            <span className={classes.title}>Gender</span>
+            <span className={classes.data}>{item.gender}</span>
+          </div>
         </div>
-      </div>
+      ))}
 
-      <div className={classes.row}>
-        <div className={classes.title}>Email</div>
-        <div className={classes.data}>
-          {JSON.parse(localStorage.getItem("email")!)}
-        </div>
-      </div>
-      <div className={classes.row}>
-        <div className={classes.title}>Age</div>
-        <div className={classes.data}>
-          {JSON.parse(localStorage.getItem("age")!)}
-        </div>
-      </div>
-      <div className={classes.row}>
-        <div className={classes.title}>Gender</div>
-        <div className={classes.data}>
-          {JSON.parse(localStorage.getItem("gender")!)}
-        </div>
-      </div>
       <div className={classes.actionButtons}>
         <button className={classes.actionButton} onClick={deleteHandler}>
           Delete
