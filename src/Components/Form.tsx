@@ -16,6 +16,7 @@ export default function Form({
   const [email, setEmail] = useState<string>();
   const [age, setAge] = useState<string>("");
   const [gender, setGender] = useState<string>();
+  const [file, setFile] = useState<string | ArrayBuffer | null>();
 
   useEffect(() => {
     // if it edit page, it will set the values to the localstorage values
@@ -31,13 +32,22 @@ export default function Form({
     }
   }, [edit]);
 
+  const fileHandler = (e: any) => {
+    const fr = new FileReader();
+    fr.readAsDataURL(e.target.files[0]);
+
+    fr.onload = (e) => {
+      setFile(e.target!.result);
+    };
+  };
+
   const sendData = (e: React.FormEvent) => {
     // store data in localstorage if form is submitted
     e?.preventDefault();
 
     if (edit) {
       let newEditArray = JSON.parse(localStorage.getItem("tableArray") || "[]");
-      newEditArray[editIndex] = { name, email, age, gender };
+      newEditArray[editIndex] = { name, email, age, gender, file };
       localStorage.setItem("tableArray", JSON.stringify(newEditArray));
       setEdit(false);
     } else {
@@ -45,7 +55,7 @@ export default function Form({
         "tableArray",
         JSON.stringify([
           ...JSON.parse(localStorage.getItem("tableArray") || "[]"),
-          { name, email, age, gender },
+          { name, email, age, gender, file },
         ])
       );
     }
@@ -55,6 +65,7 @@ export default function Form({
     setEmail("");
     setAge("");
     setGender("");
+    setFile("");
 
     alert("Data saved in localStorage Successfully");
   };
@@ -127,6 +138,7 @@ export default function Form({
             <label htmlFor="Female">Female</label>
           </div>
         </div>
+        <input required type="file" accept="image/*" onChange={fileHandler} />
 
         <button type="submit" className={classes.submitButton}>
           {edit ? "Edit" : "Submit"}
