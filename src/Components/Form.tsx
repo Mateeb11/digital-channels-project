@@ -18,6 +18,8 @@ export default function Form({
   const [gender, setGender] = useState<string>();
   const [file, setFile] = useState<string | ArrayBuffer | null>(null);
 
+  const [alertStatus, setAlertStatus] = useState(false);
+
   useEffect(() => {
     // if it edit page, it will set the values to the localstorage values
     if (edit) {
@@ -31,6 +33,15 @@ export default function Form({
       setGender(selectedEditValue[0].gender);
     }
   }, [edit]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setAlertStatus(false);
+    }, 3000);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [alertStatus]);
 
   const fileHandler = (e: any) => {
     const fr = new FileReader();
@@ -79,11 +90,23 @@ export default function Form({
     setGender("");
     setFile("");
 
-    alert("Data saved in localStorage Successfully");
+    setAlertStatus(true);
   };
 
   return (
     <>
+      {alertStatus && (
+        <div className="alert alert-success alert-dismissible" role="alert">
+          <div>Data saved in localStorage Successfully</div>
+          <button
+            type="button"
+            className="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+      )}
+
       <form onSubmit={sendData} className={`container row gap-3`} id="contact">
         <div className={`row`}>
           <div className={`col`}>
