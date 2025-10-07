@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import classes from "./Form.module.scss";
 
 type editModeValues = {
@@ -19,6 +19,8 @@ export default function Form({
   const [file, setFile] = useState<string | ArrayBuffer | null>(null);
 
   const [alertStatus, setAlertStatus] = useState(false);
+
+  const fileInputRef = useRef<any>(null);
 
   useEffect(() => {
     // if it edit page, it will set the values to the localstorage values
@@ -88,7 +90,12 @@ export default function Form({
     setEmail("");
     setAge("");
     setGender("");
-    setFile("");
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+      fileInputRef.current.type = "text";
+      fileInputRef.current.type = "file";
+    }
 
     setAlertStatus(true);
   };
@@ -218,6 +225,7 @@ export default function Form({
               accept="image/*"
               onChange={fileHandler}
               id="file"
+              ref={fileInputRef}
             />
           </div>
           <div className={`col align-self-end  d-grid`}>
