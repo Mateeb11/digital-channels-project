@@ -25,6 +25,19 @@ export default function Table() {
     getLocalStorageStatus() && setIsLocalStorageEmpty(true);
   };
 
+  // this for previewing images in new tabs workaround
+  const previewFileHandler = (file: string) => {
+    const win = window.open(file, "_blank");
+    win!.document.write(`
+        <html>
+          <head><title>Image</title></head>
+          <body style="margin:0; display:flex; align-items:center; justify-content:center; height:100vh; background:#000;">
+            <img src="${file}" style="max-width:90%; max-height:90%;" />
+          </body>
+        </html>
+    `);
+  };
+
   const getLocalStorageStatus = () => {
     return JSON.parse(localStorage.getItem("tableArray") || "[]")?.length === 0;
   };
@@ -32,52 +45,64 @@ export default function Table() {
   const tableContent = isLocalStorageEmpty ? (
     <>No Data</>
   ) : (
-    <main className={classes.container}>
-      {tableArray.map((item: any, i: number) => (
-        <div className={classes.user} key={i}>
-          <div className={classes.userTitle}>{i + 1}</div>
-          <div className={classes.userContainer}>
-            <span className={classes.title}>Name</span>
-            <span className={classes.data}>{item.name}</span>
-          </div>
-          <div className={classes.userContainer}>
-            <span className={classes.title}>Email</span>
-            <span className={classes.data}>{item.email}</span>
-          </div>
-          <div className={classes.userContainer}>
-            <span className={classes.title}>Age</span>
-            <span className={classes.data}>{item.age}</span>
-          </div>
-          <div className={classes.userContainer}>
-            <span className={classes.title}>Gender</span>
-            <span className={classes.data}>{item.gender}</span>
-          </div>
-          <div className={classes.userContainer}>
-            <span className={classes.title}>File</span>
-            <span className={classes.data}>
-              <img src={item.file} width="200px" height="200px" />
-            </span>
-          </div>
-
-          <div className={classes.actionButtons}>
-            <button
-              className={classes.actionButton}
-              onClick={() => deleteHandler(i)}
-            >
-              Delete
-            </button>
-            <button
-              className={classes.actionButton}
-              onClick={() => {
-                modeHandler(i);
-              }}
-            >
-              Edit
-            </button>
-          </div>
-        </div>
-      ))}
-    </main>
+    <>
+      <table className="table table-striped table-responsive table-bordered align-middle">
+        <thead className="table-dark">
+          <tr>
+            <th scope="col" className="text-center">
+              #
+            </th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Age</th>
+            <th scope="col">Gender</th>
+            <th scope="col">File</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tableArray.map((item: any, i: number) => (
+            <tr key={i}>
+              <th scope="row" className="text-center">
+                {i + 1}
+              </th>
+              <td>{item.name}</td>
+              <td>{item.email}</td>
+              <td>{item.age}</td>
+              <td>{item.gender}</td>
+              <td>
+                <a
+                  href=""
+                  onClick={() => {
+                    previewFileHandler(item.file);
+                  }}
+                >
+                  Preview
+                </a>
+              </td>
+              <td>
+                <div className="h-100 d-flex flex-column justify-content-between gap-3">
+                  <button
+                    className={`btn btn-danger`}
+                    onClick={() => deleteHandler(i)}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    className={`btn btn-secondary`}
+                    onClick={() => {
+                      modeHandler(i);
+                    }}
+                  >
+                    Edit
+                  </button>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
   );
 
   return mode ? (
