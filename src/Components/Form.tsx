@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { DataContext } from "../store/Contexts";
 // import classes from "./Form.module.scss";
 
 type editModeValues = {
@@ -21,6 +22,8 @@ export default function Form({
   const [alertStatus, setAlertStatus] = useState(false);
 
   const fileInputRef = useRef<any>(null);
+
+  const { data, setData } = useContext(DataContext);
 
   useEffect(() => {
     // if it edit page, it will set the values to the localstorage values
@@ -59,8 +62,24 @@ export default function Form({
     e?.preventDefault();
 
     if (edit) {
-      let newEditArray = JSON.parse(localStorage.getItem("tableArray") || "[]");
+      // localStorage Code
+      //*************************** */
+      // let newEditArray = JSON.parse(localStorage.getItem("tableArray") || "[]");
+      // if (file !== null) {
+      //   newEditArray[editIndex] = { name, email, age, gender, file };
+      // } else {
+      //   newEditArray[editIndex] = {
+      //     name,
+      //     email,
+      //     age,
+      //     gender,
+      //     file: newEditArray[editIndex].file,
+      //   };
+      // }
+      //   localStorage.setItem("tableArray", JSON.stringify(newEditArray));
+      //*************************** */
 
+      let newEditArray = data;
       if (file !== null) {
         newEditArray[editIndex] = { name, email, age, gender, file };
       } else {
@@ -72,17 +91,21 @@ export default function Form({
           file: newEditArray[editIndex].file,
         };
       }
-
-      localStorage.setItem("tableArray", JSON.stringify(newEditArray));
+      setData(newEditArray);
       setEdit(false);
     } else {
-      localStorage.setItem(
-        "tableArray",
-        JSON.stringify([
-          ...JSON.parse(localStorage.getItem("tableArray") || "[]"),
-          { name, email, age, gender, file },
-        ])
-      );
+      // localStorage Code
+      //*************************** */
+      // localStorage.setItem(
+      //   "tableArray",
+      //   JSON.stringify([
+      //     ...JSON.parse(localStorage.getItem("tableArray") || "[]"),
+      //     { name, email, age, gender, file },
+      //   ])
+      // );
+      //*************************** */
+
+      setData([...data, { name, email, age, gender, file }]);
     }
 
     // reset data
