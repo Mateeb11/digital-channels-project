@@ -3,11 +3,8 @@ import Navigation from "./Navigation";
 
 export default function RootLayout() {
   return (
-    <>
-      <Navigation />
-      <main>
-        <Outlet />
-      </main>
-    </>
+    <Navigation>
+      <Outlet />
+    </Navigation>
   );
 }

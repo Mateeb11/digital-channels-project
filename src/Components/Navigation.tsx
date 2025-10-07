@@ -2,7 +2,7 @@ import classes from "./Navigation.module.scss";
 
 import { Link, useLocation } from "react-router-dom";
 
-export default function Navigation() {
+export default function Navigation({ children }: any) {
   const location = useLocation();
   return (
     <div className={`card text-center`}>
@@ -34,6 +34,7 @@ export default function Navigation() {
           </li>
         </ul>
       </nav>
+      <div className={`card-body`}>{children}</div>
     </div>
   );
 }
