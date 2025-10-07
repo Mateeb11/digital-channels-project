@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import classes from "./Table.module.scss";
+// import classes from "./Table.module.scss";
 import Form from "./Form";
 
 export default function Table() {
@@ -106,17 +106,7 @@ export default function Table() {
   );
 
   return mode ? (
-    <>
-      <Form edit={true} setEdit={setMode} editIndex={editIndex} />
-      <button
-        className={classes.actionButton}
-        onClick={() => {
-          setMode(false);
-        }}
-      >
-        Cancel
-      </button>
-    </>
+    <Form edit={true} setEdit={setMode} editIndex={editIndex} />
   ) : (
     tableContent
   );

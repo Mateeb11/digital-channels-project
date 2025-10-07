@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import classes from "./Form.module.scss";
+// import classes from "./Form.module.scss";
 
 type editModeValues = {
   edit?: boolean;
@@ -104,7 +104,7 @@ export default function Form({
     <>
       {alertStatus && (
         <div className="alert alert-success alert-dismissible" role="alert">
-          <div>Data saved in localStorage Successfully</div>
+          <div>Data saved to localStorage Successfully</div>
           <button
             type="button"
             className="btn-close"
@@ -228,10 +228,23 @@ export default function Form({
               ref={fileInputRef}
             />
           </div>
-          <div className={`col align-self-end  d-grid`}>
-            <button type="submit" className={`btn btn-primary`}>
+          <div className={`col align-self-end gap-3 d-flex`}>
+            <button
+              type="submit"
+              className={`btn btn-primary flex-grow-1 w-100`}
+            >
               {edit ? "Edit" : "Submit"}
             </button>
+            {edit && (
+              <button
+                className={`btn btn-danger w-100`}
+                onClick={() => {
+                  setEdit(false);
+                }}
+              >
+                Cancel
+              </button>
+            )}
           </div>
         </div>
       </form>

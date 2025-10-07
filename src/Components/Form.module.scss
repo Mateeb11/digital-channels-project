@@ -1,22 +1,22 @@
-.form {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+// .form {
+//   display: grid;
+//   grid-template-columns: repeat(2, 1fr);
 
-  max-width: 500px;
+//   max-width: 500px;
 
-  gap: 1em;
+//   gap: 1em;
 
-  border: 1px solid black;
-  border-radius: 0.5em;
+//   border: 1px solid black;
+//   border-radius: 0.5em;
 
-  padding: 1em;
+//   padding: 1em;
 
-  .radio {
-    display: flex;
-    gap: 1em;
-  }
+//   .radio {
+//     display: flex;
+//     gap: 1em;
+//   }
 
-  .submitButton {
-    max-width: 100px;
-  }
-}
+//   .submitButton {
+//     max-width: 100px;
+//   }
+// }
