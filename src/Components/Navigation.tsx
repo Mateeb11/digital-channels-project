@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 export default function Navigation({ children }: any) {
   const location = useLocation();
   return (
-    <div className={`card text-center`}>
+    <div className={`card`}>
       <nav className={`card-header`}>
         <ul className={`nav nav-tabs card-header-tabs`}>
           <li className={`nav-item`}>

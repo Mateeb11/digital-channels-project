@@ -84,82 +84,125 @@ export default function Form({
 
   return (
     <>
-      <form onSubmit={sendData} className={classes.form} id="contact">
-        <input
-          required
-          placeholder="Your Name"
-          value={name || ""}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setName(e.target.value);
-          }}
-          type="text"
-          title="Name"
-        ></input>
-        <input
-          required
-          placeholder="Your Email"
-          value={email || ""}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setEmail(e.target.value);
-          }}
-          type="email"
-          title="Email"
-        ></input>
-        <select
-          required
-          value={age}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-            setAge(e.target.value);
-          }}
-          name="age"
-          id="ages"
-        >
-          <option value="" disabled>
-            Please Select Your Age Range
-          </option>
-          <option value="- 10">- 10</option>
-          <option value="10 - 35">11 - 35</option>
-          <option value="+ 35">+ 35</option>
-        </select>
-        <div className={classes.radio}>
-          <div>
+      <form onSubmit={sendData} className={`container row gap-3`} id="contact">
+        <div className={`row`}>
+          <div className={`col`}>
+            <label htmlFor="name" className={`form-label`}>
+              Name
+            </label>
             <input
               required
-              checked={gender === "Male"}
-              value="Male"
+              className={`form-control`}
+              placeholder="Your Name"
+              value={name || ""}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setGender(e.target.value);
+                setName(e.target.value);
               }}
-              id="Male"
-              type="radio"
-              name="gender"
+              type="text"
+              title="Name"
+              id="name"
             ></input>
-            <label htmlFor="Male">Male</label>
           </div>
-          <div>
+          <div className={`col`}>
+            <label htmlFor="email" className={`form-label`}>
+              Email
+            </label>
             <input
-              checked={gender === "Female"}
+              required
+              className={`form-control`}
+              placeholder="Your Email"
+              value={email || ""}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setGender(e.target.value);
+                setEmail(e.target.value);
               }}
-              id="Female"
-              type="radio"
-              name="gender"
-              value="Female"
+              type="email"
+              title="Email"
+              id="email"
             ></input>
-            <label htmlFor="Female">Female</label>
           </div>
         </div>
-        <input
-          required={!edit}
-          type="file"
-          accept="image/*"
-          onChange={fileHandler}
-        />
-
-        <button type="submit" className={classes.submitButton}>
-          {edit ? "Edit" : "Submit"}
-        </button>
+        <div className={`row`}>
+          <div className={`col`}>
+            <label htmlFor="ages" className={`form-label`}>
+              Age
+            </label>
+            <select
+              required
+              className={`form-select`}
+              value={age}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                setAge(e.target.value);
+              }}
+              name="age"
+              id="ages"
+            >
+              <option value="" disabled>
+                Please Select Your Age Range
+              </option>
+              <option value="- 10">- 10</option>
+              <option value="10 - 35">11 - 35</option>
+              <option value="+ 35">+ 35</option>
+            </select>
+          </div>
+          <div className={`col align-self-center`}>
+            <label htmlFor="gender" className={`form-label row ms-1`}>
+              Gender
+            </label>
+            <div className={`form-check form-check-inline`}>
+              <label htmlFor="Male" className={`form-check-label`}>
+                Male
+              </label>
+              <input
+                required
+                className={`form-check-input`}
+                checked={gender === "Male"}
+                value="Male"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setGender(e.target.value);
+                }}
+                id="Male"
+                type="radio"
+                name="gender"
+              ></input>
+            </div>
+            <div className={`form-check form-check-inline`}>
+              <label htmlFor="Female" className={`form-check-label`}>
+                Female
+              </label>
+              <input
+                className={`form-check-input`}
+                checked={gender === "Female"}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setGender(e.target.value);
+                }}
+                id="Female"
+                type="radio"
+                name="gender"
+                value="Female"
+              ></input>
+            </div>
+          </div>
+        </div>
+        <div className={`row`}>
+          <div className={`col`}>
+            <label htmlFor="file" className={`form-label`}>
+              Upload Image
+            </label>
+            <input
+              required={!edit}
+              className={`form-control`}
+              type="file"
+              accept="image/*"
+              onChange={fileHandler}
+              id="file"
+            />
+          </div>
+          <div className={`col align-self-end  d-grid`}>
+            <button type="submit" className={`btn btn-primary`}>
+              {edit ? "Edit" : "Submit"}
+            </button>
+          </div>
+        </div>
       </form>
     </>
   );
