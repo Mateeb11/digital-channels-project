@@ -9,14 +9,18 @@ export default function Table() {
   const [tableArray, setTableArray] = useState([]);
   const [mode, setMode] = useState<boolean>(false);
   const [editIndex, setEditIndex] = useState<number>(0);
-  const [isContextEmpty, setIsContextEmpty] = useState(false);
+  const [isContextEmpty, setIsContextEmpty] = useState(true);
+
+  const { data, setData } = useContext(DataContext);
 
   // localStorage Code
   //*************************** */
   // const [isLocalStorageEmpty, setIsLocalStorageEmpty] = useState(false);
   //*************************** */
 
-  const { data, setData } = useContext(DataContext);
+  useEffect(() => {
+    getContextStatus() && setIsContextEmpty(true);
+  }, [data]);
 
   useEffect(() => {
     // for isLocalStorageEmpty initial value
@@ -67,6 +71,12 @@ export default function Table() {
     return data.length === 0;
   };
 
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+  };
+
   const tableContent = isContextEmpty ? (
     <>No Data</>
   ) : (
@@ -82,6 +92,7 @@ export default function Table() {
             <th scope="col">Age</th>
             <th scope="col">Gender</th>
             <th scope="col">File</th>
+            <th scope="col">Timer</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
@@ -105,6 +116,7 @@ export default function Table() {
                   Preview
                 </a>
               </td>
+              <td>{formatTime(item.time)}</td>
               <td>
                 <div className="h-100 d-flex flex-column justify-content-between gap-3">
                   <button

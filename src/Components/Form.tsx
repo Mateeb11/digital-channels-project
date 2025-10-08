@@ -8,6 +8,8 @@ type editModeValues = {
   editIndex?: number;
 };
 
+const timer: number = 120;
+
 export default function Form({
   edit = false,
   setEdit = () => {},
@@ -81,7 +83,14 @@ export default function Form({
 
       let newEditArray = data;
       if (file !== null) {
-        newEditArray[editIndex] = { name, email, age, gender, file };
+        newEditArray[editIndex] = {
+          name,
+          email,
+          age,
+          gender,
+          file,
+          time: timer,
+        };
       } else {
         newEditArray[editIndex] = {
           name,
@@ -89,6 +98,7 @@ export default function Form({
           age,
           gender,
           file: newEditArray[editIndex].file,
+          time: timer,
         };
       }
       setData(newEditArray);
@@ -105,7 +115,7 @@ export default function Form({
       // );
       //*************************** */
 
-      setData([...data, { name, email, age, gender, file }]);
+      setData([...data, { name, email, age, gender, file, time: timer }]);
     }
 
     // reset data

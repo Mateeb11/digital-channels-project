@@ -1,6 +1,6 @@
 // import classes from "./Navigation.module.scss";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { DataContext } from "../store/Contexts";
 
@@ -8,6 +8,22 @@ export default function Navigation({ children }: any) {
   const [data, setData] = useState([]);
 
   const location = useLocation();
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const newArray = data;
+      newArray.map((item: any, i: number) => {
+        item.time = item.time - 1;
+        if (item.time === 0) {
+          const newArray = data;
+          newArray.splice(i, 1);
+        }
+      });
+      setData([...newArray]);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  });
   return (
     <div className={`card`}>
       <nav className={`card-header`}>
