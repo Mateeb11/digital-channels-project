@@ -10,6 +10,8 @@ export default function Navigation({ children }: any) {
   const location = useLocation();
 
   useEffect(() => {
+    if (data.length === 0) return;
+
     const timer = setInterval(() => {
       const newArray = data;
       newArray.map((item: any, i: number) => {
