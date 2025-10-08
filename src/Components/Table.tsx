@@ -1,17 +1,34 @@
-import { useEffect, useState } from "react";
 // import classes from "./Table.module.scss";
+
+import { useContext, useEffect, useState } from "react";
+
 import Form from "./Form";
+import { DataContext } from "../store/Contexts";
 
 export default function Table() {
   const [tableArray, setTableArray] = useState([]);
   const [mode, setMode] = useState<boolean>(false);
   const [editIndex, setEditIndex] = useState<number>(0);
-  const [isLocalStorageEmpty, setIsLocalStorageEmpty] = useState(false);
+  const [isContextEmpty, setIsContextEmpty] = useState(false);
+
+  // localStorage Code
+  //*************************** */
+  // const [isLocalStorageEmpty, setIsLocalStorageEmpty] = useState(false);
+  //*************************** */
+
+  const { data, setData } = useContext(DataContext);
 
   useEffect(() => {
     // for isLocalStorageEmpty initial value
-    setIsLocalStorageEmpty(getLocalStorageStatus() ? true : false);
-    setTableArray(JSON.parse(localStorage.getItem("tableArray") || "[]"));
+
+    // localStorage Code
+    //*************************** */
+    // setIsLocalStorageEmpty(getLocalStorageStatus() ? true : false);
+    // setTableArray(JSON.parse(localStorage.getItem("tableArray") || "[]"));
+    //*************************** */
+
+    setIsContextEmpty(getContextStatus() ? true : false);
+    setTableArray(data);
   }, [mode]);
 
   const modeHandler = (i: number) => {
@@ -21,8 +38,9 @@ export default function Table() {
   const deleteHandler = (i: number) => {
     tableArray.splice(i, 1);
     setTableArray([...tableArray]);
-    localStorage.setItem("tableArray", JSON.stringify(tableArray));
-    getLocalStorageStatus() && setIsLocalStorageEmpty(true);
+    // localStorage.setItem("tableArray", JSON.stringify(tableArray));
+    setData(tableArray);
+    getContextStatus() && setIsContextEmpty(true);
   };
 
   // this for previewing images in new tabs workaround
@@ -38,11 +56,18 @@ export default function Table() {
     `);
   };
 
-  const getLocalStorageStatus = () => {
-    return JSON.parse(localStorage.getItem("tableArray") || "[]")?.length === 0;
+  // localStorage Code
+  //*************************** */
+  // const getLocalStorageStatus = () => {
+  //   return JSON.parse(localStorage.getItem("tableArray") || "[]")?.length === 0;
+  // };
+  //*************************** */
+
+  const getContextStatus = () => {
+    return data.length === 0;
   };
 
-  const tableContent = isLocalStorageEmpty ? (
+  const tableContent = isContextEmpty ? (
     <>No Data</>
   ) : (
     <>
@@ -61,7 +86,7 @@ export default function Table() {
           </tr>
         </thead>
         <tbody>
-          {tableArray.map((item: any, i: number) => (
+          {data.map((item: any, i: number) => (
             <tr key={i}>
               <th scope="row" className="text-center">
                 {i + 1}

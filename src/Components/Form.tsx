@@ -127,7 +127,7 @@ export default function Form({
     <>
       {alertStatus && (
         <div className="alert alert-success alert-dismissible" role="alert">
-          <div>Data saved to localStorage Successfully</div>
+          <div>Data saved to Context Successfully</div>
           <button
             type="button"
             className="btn-close"
