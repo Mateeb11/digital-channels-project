@@ -14,17 +14,16 @@ export default function Navigation({ children }: any) {
   useEffect(() => {
     if (items.data.length === 0) return;
     const timer = setInterval(() => {
-      items.data.map((item: any, i: number) => {
-        dispatch(
-          dataActions.editData({
-            index: i,
-            item: { ...item, time: item.time - 1 },
-          })
-        );
-        if (item.time === 0) {
-          dispatch(dataActions.removeData(i));
+      let tempArray = items.data.map((item: any) => {
+        if (item.time > 0) {
+          return { ...item, time: item.time - 1 };
         }
       });
+      dispatch(
+        dataActions.replaceData(
+          tempArray.filter((item: any) => item !== undefined)
+        )
+      );
     }, 1000);
     return () => clearInterval(timer);
   });

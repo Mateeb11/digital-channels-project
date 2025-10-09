@@ -10,6 +10,9 @@ const dataSlice = createSlice({
     editData(state: any, action) {
       state.data[action.payload.index] = action.payload.item;
     },
+    replaceData(state: any, action) {
+      state.data = action.payload;
+    },
     removeData(state: any, action) {
       state.data.splice(action.payload, 1);
     },
