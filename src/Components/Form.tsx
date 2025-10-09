@@ -34,12 +34,10 @@ export default function Form({
   useEffect(() => {
     // if it edit page, it will set the values to the localstorage values
     if (edit && items.data.length !== 0) {
-      let selectedEditValue = items.data.splice(editIndex, 1);
-
-      setName(selectedEditValue[0].name);
-      setEmail(selectedEditValue[0].email);
-      setAge(selectedEditValue[0].age);
-      setGender(selectedEditValue[0].gender);
+      setName(items.data[editIndex].name);
+      setEmail(items.data[editIndex].email);
+      setAge(items.data[editIndex].age);
+      setGender(items.data[editIndex].gender);
     }
   }, [edit]);
 
