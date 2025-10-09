@@ -110,14 +110,14 @@ export default function Table() {
               <td>{item.age}</td>
               <td>{item.gender}</td>
               <td>
-                <a
-                  href=""
+                <button
+                  className="btn btn-link p-0"
                   onClick={() => {
                     previewFileHandler(item.file);
                   }}
                 >
                   Preview
-                </a>
+                </button>
               </td>
               <td>{formatTime(item.time)}</td>
               <td>
