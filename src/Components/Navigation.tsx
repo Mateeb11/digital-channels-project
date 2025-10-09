@@ -1,8 +1,7 @@
 // import classes from "./Navigation.module.scss";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { DataContext } from "../store/Contexts";
 import { useDispatch, useSelector } from "react-redux";
 import { dataActions } from "../store";
 
@@ -13,19 +12,21 @@ export default function Navigation({ children }: any) {
   const items = useSelector((state: any) => state.items);
 
   useEffect(() => {
-    // if (items.data.length === 0) return;
-    // const timer = setInterval(() => {
-    //   const newArray = data;
-    //   newArray.map((item: any, i: number) => {
-    //     item.time = item.time - 1;
-    //     if (item.time === 0) {
-    //       const newArray = data;
-    //       newArray.splice(i, 1);
-    //     }
-    //   });
-    //   dispatch(dataActions.addData());
-    // }, 1000);
-    // return () => clearInterval(timer);
+    if (items.data.length === 0) return;
+    const timer = setInterval(() => {
+      items.data.map((item: any, i: number) => {
+        dispatch(
+          dataActions.editData({
+            index: i,
+            item: { ...item, time: item.time - 1 },
+          })
+        );
+        if (item.time === 0) {
+          dispatch(dataActions.removeData(i));
+        }
+      });
+    }, 1000);
+    return () => clearInterval(timer);
   });
   return (
     <div className={`card`}>

@@ -206,7 +206,7 @@ export default function Form({
                 Please Select Your Age Range
               </option>
               <option value="- 10">- 10</option>
-              <option value="10 - 35">11 - 35</option>
+              <option value="11 - 35">11 - 35</option>
               <option value="+ 35">+ 35</option>
             </select>
           </div>
