@@ -1,17 +1,19 @@
 // import classes from "./Table.module.scss";
 
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import Form from "./Form";
-import { DataContext } from "../store/Contexts";
+import { useDispatch, useSelector } from "react-redux";
+import { dataActions } from "../store";
 
 export default function Table() {
-  const [tableArray, setTableArray] = useState([]);
+  // const [tableArray, setTableArray] = useState([]);
   const [mode, setMode] = useState<boolean>(false);
   const [editIndex, setEditIndex] = useState<number>(0);
   const [isContextEmpty, setIsContextEmpty] = useState(true);
 
-  const { data, setData } = useContext(DataContext);
+  const dispatch = useDispatch();
+  const items = useSelector((state: any) => state.items);
 
   // localStorage Code
   //*************************** */
@@ -20,7 +22,7 @@ export default function Table() {
 
   useEffect(() => {
     getContextStatus() && setIsContextEmpty(true);
-  }, [data]);
+  }, [items]);
 
   useEffect(() => {
     // for isLocalStorageEmpty initial value
@@ -32,7 +34,8 @@ export default function Table() {
     //*************************** */
 
     setIsContextEmpty(getContextStatus() ? true : false);
-    setTableArray(data);
+
+    // setTableArray(items);
   }, [mode]);
 
   const modeHandler = (i: number) => {
@@ -40,10 +43,10 @@ export default function Table() {
     setEditIndex(i);
   };
   const deleteHandler = (i: number) => {
-    tableArray.splice(i, 1);
-    setTableArray([...tableArray]);
+    // tableArray.splice(i, 1);
+    // setTableArray([...tableArray]);
     // localStorage.setItem("tableArray", JSON.stringify(tableArray));
-    setData(tableArray);
+    dispatch(dataActions.removeData(i));
     getContextStatus() && setIsContextEmpty(true);
   };
 
@@ -68,7 +71,7 @@ export default function Table() {
   //*************************** */
 
   const getContextStatus = () => {
-    return data.length === 0;
+    return items.data.length === 0;
   };
 
   const formatTime = (seconds: number) => {
@@ -97,7 +100,7 @@ export default function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.map((item: any, i: number) => (
+          {items.data.map((item: any, i: number) => (
             <tr key={i}>
               <th scope="row" className="text-center">
                 {i + 1}

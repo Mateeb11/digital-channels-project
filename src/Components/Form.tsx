@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { DataContext } from "../store/Contexts";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { dataActions } from "../store";
 // import classes from "./Form.module.scss";
 
 type editModeValues = {
@@ -25,14 +26,15 @@ export default function Form({
 
   const fileInputRef = useRef<any>(null);
 
-  const { data, setData } = useContext(DataContext);
+  // const { data, setData } = useContext(DataContext);
+
+  const dispatch = useDispatch();
+  const items = useSelector((state: any) => state.items);
 
   useEffect(() => {
     // if it edit page, it will set the values to the localstorage values
-    if (edit) {
-      let selectedEditValue = JSON.parse(
-        localStorage.getItem("tableArray") || "[]"
-      ).splice(editIndex, 1);
+    if (edit && items.data.length !== 0) {
+      let selectedEditValue = items.data.splice(editIndex, 1);
 
       setName(selectedEditValue[0].name);
       setEmail(selectedEditValue[0].email);
@@ -79,11 +81,12 @@ export default function Form({
       //   };
       // }
       //   localStorage.setItem("tableArray", JSON.stringify(newEditArray));
+      // let newEditArray = data;
       //*************************** */
 
-      let newEditArray = data;
+      let newEditItem = {};
       if (file !== null) {
-        newEditArray[editIndex] = {
+        newEditItem = {
           name,
           email,
           age,
@@ -92,16 +95,16 @@ export default function Form({
           time: timer,
         };
       } else {
-        newEditArray[editIndex] = {
+        newEditItem = {
           name,
           email,
           age,
           gender,
-          file: newEditArray[editIndex].file,
+          file: items.data[editIndex].file,
           time: timer,
         };
       }
-      setData(newEditArray);
+      dispatch(dataActions.editData({ index: editIndex, item: newEditItem }));
       setEdit(false);
     } else {
       // localStorage Code
@@ -115,7 +118,9 @@ export default function Form({
       // );
       //*************************** */
 
-      setData([...data, { name, email, age, gender, file, time: timer }]);
+      dispatch(
+        dataActions.addData({ name, email, age, gender, file, time: timer })
+      );
     }
 
     // reset data

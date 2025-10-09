@@ -3,28 +3,29 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { DataContext } from "../store/Contexts";
+import { useDispatch, useSelector } from "react-redux";
+import { dataActions } from "../store";
 
 export default function Navigation({ children }: any) {
-  const [data, setData] = useState([]);
-
   const location = useLocation();
 
+  const dispatch = useDispatch();
+  const items = useSelector((state: any) => state.items);
+
   useEffect(() => {
-    if (data.length === 0) return;
-
-    const timer = setInterval(() => {
-      const newArray = data;
-      newArray.map((item: any, i: number) => {
-        item.time = item.time - 1;
-        if (item.time === 0) {
-          const newArray = data;
-          newArray.splice(i, 1);
-        }
-      });
-      setData([...newArray]);
-    }, 1000);
-
-    return () => clearInterval(timer);
+    // if (items.data.length === 0) return;
+    // const timer = setInterval(() => {
+    //   const newArray = data;
+    //   newArray.map((item: any, i: number) => {
+    //     item.time = item.time - 1;
+    //     if (item.time === 0) {
+    //       const newArray = data;
+    //       newArray.splice(i, 1);
+    //     }
+    //   });
+    //   dispatch(dataActions.addData());
+    // }, 1000);
+    // return () => clearInterval(timer);
   });
   return (
     <div className={`card`}>
@@ -56,9 +57,7 @@ export default function Navigation({ children }: any) {
           </li>
         </ul>
       </nav>
-      <DataContext value={{ data, setData }}>
-        <div className={`card-body`}>{children}</div>
-      </DataContext>
+      <div className={`card-body`}>{children}</div>
     </div>
   );
 }
