@@ -72,6 +72,8 @@ export default function Form({
 
     setIsFormSubmitted(true);
 
+    if (!isEmailValid && !isNameValid && !isGenderValid && !isAgeValid) return;
+
     if (edit) {
       // localStorage Code
       //*************************** */
@@ -175,16 +177,22 @@ export default function Form({
               Name
             </label>
             <input
-              className={`form-control`}
+              className={`form-control ${
+                isFormSubmitted && (isNameValid ? "is-valid" : "is-invalid")
+              }`}
               placeholder="Your Name"
               value={name || ""}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                e.target.value === ""
+                  ? setIsNameValid(false)
+                  : setIsNameValid(true);
                 setName(e.target.value);
               }}
               type="text"
               title="Name"
               id="name"
             ></input>
+            <span className="invalid-feedback">Please enter a name</span>
           </div>
           <div className={`col`}>
             <label htmlFor="email" className={`form-label`}>
@@ -204,9 +212,7 @@ export default function Form({
               title="Email"
               id="email"
             ></input>
-            <span className="invalid-feedback">
-              Please enter a valid email.
-            </span>
+            <span className="invalid-feedback">Please enter a valid email</span>
           </div>
         </div>
         <div className={`row`}>
