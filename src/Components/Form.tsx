@@ -203,156 +203,153 @@ export default function Form({
         </div>
       )}
 
-      <form onSubmit={sendData} className={`container row gap-3`} id="contact">
-        <div className={`row`}>
-          <div className={`col`}>
-            <label htmlFor="name" className={`form-label`}>
-              Name
-            </label>
-            <input
-              className={`form-control ${
-                isFormSubmitted && (isNameValid ? "is-valid" : "is-invalid")
-              }`}
-              placeholder="Your Name"
-              value={name || ""}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                validateName(e.target.value);
-                setName(e.target.value);
-              }}
-              type="text"
-              title="Name"
-              id="name"
-            ></input>
-            <span className="invalid-feedback">Please enter your name</span>
-          </div>
-          <div className={`col`}>
-            <label htmlFor="email" className={`form-label`}>
-              Email
-            </label>
-            <input
-              className={`form-control ${
-                isFormSubmitted && (isEmailValid ? "is-valid" : "is-invalid")
-              }`}
-              placeholder="Your Email"
-              value={email || ""}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                validateEmail(e.target.value);
-                setEmail(e.target.value);
-              }}
-              type="email"
-              title="Email"
-              id="email"
-            ></input>
-            <span className="invalid-feedback">Please enter a valid email</span>
-          </div>
+      <form
+        onSubmit={sendData}
+        className={`container d-grid gap-3`}
+        id="contact"
+      >
+        <div className={`col`}>
+          <label htmlFor="name" className={`form-label`}>
+            Name
+          </label>
+          <input
+            className={`form-control ${
+              isFormSubmitted && (isNameValid ? "is-valid" : "is-invalid")
+            }`}
+            placeholder="Your Name"
+            value={name || ""}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              validateName(e.target.value);
+              setName(e.target.value);
+            }}
+            type="text"
+            title="Name"
+            id="name"
+          ></input>
+          <span className="invalid-feedback">Please enter your name</span>
         </div>
-        <div className={`row`}>
-          <div className={`col`}>
-            <label htmlFor="age" className={`form-label`}>
-              Age
-            </label>
-            <input
-              className={`form-control ${
-                isFormSubmitted && (isAgeValid ? "is-valid" : "is-invalid")
-              }`}
-              placeholder="Your Age"
-              value={age || ""}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                validateAge(e.target.value);
-                setAge(e.target.value);
-              }}
-              type="number"
-              title="age"
-              id="age"
-            ></input>
-            <span className="invalid-feedback">Please enter your age</span>
-          </div>
-          <div className={`col align-self-center`}>
-            <label htmlFor="gender" className={`form-label row ms-1`}>
-              Gender
-            </label>
-            <div className={`form-check form-check-inline`}>
-              <label htmlFor="Male" className={`form-check-label`}>
-                Male
-              </label>
-              <input
-                className={`form-check-input ${
-                  isFormSubmitted && (isGenderValid ? "is-valid" : "is-invalid")
-                }`}
-                checked={gender === "Male"}
-                value="Male"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  validateGender(e.target.value);
-                  setGender(e.target.value);
-                }}
-                id="Male"
-                type="radio"
-                name="gender"
-              ></input>
-            </div>
-            <div className={`form-check form-check-inline`}>
-              <label htmlFor="Female" className={`form-check-label`}>
-                Female
-              </label>
-              <input
-                className={`form-check-input ${
-                  isFormSubmitted && (isGenderValid ? "is-valid" : "is-invalid")
-                }`}
-                checked={gender === "Female"}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  validateGender(e.target.value);
-                  setGender(e.target.value);
-                }}
-                id="Female"
-                type="radio"
-                name="gender"
-                value="Female"
-              ></input>
-            </div>
-            <span
-              className={`invalid-feedback ${
-                isFormSubmitted && (isGenderValid ? "" : "d-block")
-              }`}
-            >
-              Please choose your gender
-            </span>
-          </div>
+        <div className={`col`}>
+          <label htmlFor="email" className={`form-label`}>
+            Email
+          </label>
+          <input
+            className={`form-control ${
+              isFormSubmitted && (isEmailValid ? "is-valid" : "is-invalid")
+            }`}
+            placeholder="Your Email"
+            value={email || ""}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              validateEmail(e.target.value);
+              setEmail(e.target.value);
+            }}
+            type="email"
+            title="Email"
+            id="email"
+          ></input>
+          <span className="invalid-feedback">Please enter a valid email</span>
         </div>
-        <div className={`row`}>
-          <div className={`col`}>
-            <label htmlFor="file" className={`form-label`}>
-              Upload Image
+        <div className={`col`}>
+          <label htmlFor="age" className={`form-label`}>
+            Age
+          </label>
+          <input
+            className={`form-control ${
+              isFormSubmitted && (isAgeValid ? "is-valid" : "is-invalid")
+            }`}
+            placeholder="Your Age"
+            value={age || ""}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              validateAge(e.target.value);
+              setAge(e.target.value);
+            }}
+            type="number"
+            title="age"
+            id="age"
+          ></input>
+          <span className="invalid-feedback">Please enter your age</span>
+        </div>
+        <div className={`col align-self-center`}>
+          <label htmlFor="gender" className={`form-label row ms-1`}>
+            Gender
+          </label>
+          <div className={`form-check form-check-inline`}>
+            <label htmlFor="Male" className={`form-check-label`}>
+              Male
             </label>
             <input
-              className={`form-control ${
-                isFormSubmitted && (isFileValid ? "is-valid" : "is-invalid")
+              className={`form-check-input ${
+                isFormSubmitted && (isGenderValid ? "is-valid" : "is-invalid")
               }`}
-              type="file"
-              accept="image/*"
-              onChange={fileHandler}
-              id="file"
-              ref={fileInputRef}
-            />
-            <span className="invalid-feedback">Please upload image</span>
+              checked={gender === "Male"}
+              value="Male"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                validateGender(e.target.value);
+                setGender(e.target.value);
+              }}
+              id="Male"
+              type="radio"
+              name="gender"
+            ></input>
           </div>
-          <div className={`col align-self-end gap-3 d-flex`}>
+          <div className={`form-check form-check-inline`}>
+            <label htmlFor="Female" className={`form-check-label`}>
+              Female
+            </label>
+            <input
+              className={`form-check-input ${
+                isFormSubmitted && (isGenderValid ? "is-valid" : "is-invalid")
+              }`}
+              checked={gender === "Female"}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                validateGender(e.target.value);
+                setGender(e.target.value);
+              }}
+              id="Female"
+              type="radio"
+              name="gender"
+              value="Female"
+            ></input>
+          </div>
+          <span
+            className={`invalid-feedback ${
+              isFormSubmitted && (isGenderValid ? "" : "d-block")
+            }`}
+          >
+            Please choose your gender
+          </span>
+        </div>
+        <div className={`col`}>
+          <label htmlFor="file" className={`form-label`}>
+            Upload Image
+          </label>
+          <input
+            className={`form-control ${
+              isFormSubmitted && (isFileValid ? "is-valid" : "is-invalid")
+            }`}
+            type="file"
+            accept="image/*"
+            onChange={fileHandler}
+            id="file"
+            ref={fileInputRef}
+          />
+          <span className="invalid-feedback">Please upload image</span>
+        </div>
+        <div
+          className={`col align-self-end gap-3 d-flex justify-content-center`}
+        >
+          <button type="submit" className={`btn btn-primary w-25`}>
+            {edit ? "Edit" : "Submit"}
+          </button>
+          {edit && (
             <button
-              type="submit"
-              className={`btn btn-primary flex-grow-1 w-100`}
+              className={`btn btn-danger w-25`}
+              onClick={() => {
+                setEdit(false);
+              }}
             >
-              {edit ? "Edit" : "Submit"}
+              Cancel
             </button>
-            {edit && (
-              <button
-                className={`btn btn-danger w-100`}
-                onClick={() => {
-                  setEdit(false);
-                }}
-              >
-                Cancel
-              </button>
-            )}
-          </div>
+          )}
         </div>
       </form>
     </>
