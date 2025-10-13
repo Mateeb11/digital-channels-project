@@ -28,6 +28,7 @@ export default function Form({
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isAgeValid, setIsAgeValid] = useState(false);
   const [isGenderValid, setIsGenderValid] = useState(false);
+  const [isFileValid, setIsFileValid] = useState(false);
 
   const [alertStatus, setAlertStatus] = useState(false);
 
@@ -58,12 +59,17 @@ export default function Form({
   }, [alertStatus]);
 
   const fileHandler = (e: any) => {
-    const fr = new FileReader();
-    fr.readAsDataURL(e.target.files[0]);
+    if (e.target.files[0] === undefined) {
+      setIsFileValid(false);
+    } else {
+      setIsFileValid(true);
+      const fr = new FileReader();
+      fr.readAsDataURL(e.target.files[0]);
 
-    fr.onload = (e) => {
-      setFile(e.target!.result);
-    };
+      fr.onload = (e) => {
+        setFile(e.target!.result);
+      };
+    }
   };
 
   const sendData = (e: React.FormEvent) => {
@@ -145,6 +151,12 @@ export default function Form({
     }
 
     setAlertStatus(true);
+
+    setIsFormSubmitted(false);
+    setIsEmailValid(false);
+    setIsNameValid(false);
+    setIsAgeValid(false);
+    setIsGenderValid(false);
   };
 
   const validateEmail = (email: string) => {
@@ -305,13 +317,16 @@ export default function Form({
               Upload Image
             </label>
             <input
-              className={`form-control`}
+              className={`form-control ${
+                isFormSubmitted && (isFileValid ? "is-valid" : "is-invalid")
+              }`}
               type="file"
               accept="image/*"
               onChange={fileHandler}
               id="file"
               ref={fileInputRef}
             />
+            <span className="invalid-feedback">Please upload image</span>
           </div>
           <div className={`col align-self-end gap-3 d-flex`}>
             <button
