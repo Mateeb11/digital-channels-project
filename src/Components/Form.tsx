@@ -22,6 +22,13 @@ export default function Form({
   const [gender, setGender] = useState<string>();
   const [file, setFile] = useState<string | ArrayBuffer | null>(null);
 
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+
+  const [isNameValid, setIsNameValid] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isAgeValid, setIsAgeValid] = useState(false);
+  const [isGenderValid, setIsGenderValid] = useState(false);
+
   const [alertStatus, setAlertStatus] = useState(false);
 
   const fileInputRef = useRef<any>(null);
@@ -62,6 +69,8 @@ export default function Form({
   const sendData = (e: React.FormEvent) => {
     // store data in localstorage if form is submitted
     e?.preventDefault();
+
+    setIsFormSubmitted(true);
 
     if (edit) {
       // localStorage Code
@@ -136,6 +145,15 @@ export default function Form({
     setAlertStatus(true);
   };
 
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    if (emailRegex.test(email)) {
+      setIsEmailValid(true);
+    } else {
+      setIsEmailValid(false);
+    }
+  };
+
   return (
     <>
       {alertStatus && (
@@ -157,7 +175,6 @@ export default function Form({
               Name
             </label>
             <input
-              required
               className={`form-control`}
               placeholder="Your Name"
               value={name || ""}
@@ -174,17 +191,22 @@ export default function Form({
               Email
             </label>
             <input
-              required
-              className={`form-control`}
+              className={`form-control ${
+                isFormSubmitted && (isEmailValid ? "is-valid" : "is-invalid")
+              }`}
               placeholder="Your Email"
               value={email || ""}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                validateEmail(e.target.value);
                 setEmail(e.target.value);
               }}
               type="email"
               title="Email"
               id="email"
             ></input>
+            <span className="invalid-feedback">
+              Please enter a valid email.
+            </span>
           </div>
         </div>
         <div className={`row`}>
@@ -193,7 +215,6 @@ export default function Form({
               Age
             </label>
             <select
-              required
               className={`form-select`}
               value={age}
               onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -219,7 +240,6 @@ export default function Form({
                 Male
               </label>
               <input
-                required
                 className={`form-check-input`}
                 checked={gender === "Male"}
                 value="Male"
@@ -255,7 +275,6 @@ export default function Form({
               Upload Image
             </label>
             <input
-              required={!edit}
               className={`form-control`}
               type="file"
               accept="image/*"
