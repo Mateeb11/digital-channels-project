@@ -66,7 +66,6 @@ export default function Form({
   }, [alertStatus]);
 
   const fileHandler = (e: any) => {
-    console.log(e.target.files[0]);
     if (
       e.target.files[0] === undefined ||
       e.target.files[0].type !== "image/jpeg"
