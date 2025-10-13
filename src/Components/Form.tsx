@@ -156,6 +156,20 @@ export default function Form({
     }
   };
 
+  const validateName = (name: string) => {
+    name === "" ? setIsNameValid(false) : setIsNameValid(true);
+  };
+
+  const validateAge = (age: string) => {
+    Number(age) < 1 || Number(age) > 130 || age === null
+      ? setIsAgeValid(false)
+      : setIsAgeValid(true);
+  };
+
+  const validateGender = (gender: string) => {
+    gender === "" ? setIsGenderValid(false) : setIsGenderValid(true);
+  };
+
   return (
     <>
       {alertStatus && (
@@ -183,9 +197,7 @@ export default function Form({
               placeholder="Your Name"
               value={name || ""}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                e.target.value === ""
-                  ? setIsNameValid(false)
-                  : setIsNameValid(true);
+                validateName(e.target.value);
                 setName(e.target.value);
               }}
               type="text"
@@ -227,11 +239,7 @@ export default function Form({
               placeholder="Your Age"
               value={age || ""}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                Number(e.target.value) < 1 ||
-                Number(e.target.value) > 130 ||
-                e.target.value === null
-                  ? setIsAgeValid(false)
-                  : setIsAgeValid(true);
+                validateAge(e.target.value);
                 setAge(e.target.value);
               }}
               type="number"
@@ -249,10 +257,13 @@ export default function Form({
                 Male
               </label>
               <input
-                className={`form-check-input`}
+                className={`form-check-input ${
+                  isFormSubmitted && (isGenderValid ? "is-valid" : "is-invalid")
+                }`}
                 checked={gender === "Male"}
                 value="Male"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  validateGender(e.target.value);
                   setGender(e.target.value);
                 }}
                 id="Male"
@@ -265,9 +276,12 @@ export default function Form({
                 Female
               </label>
               <input
-                className={`form-check-input`}
+                className={`form-check-input ${
+                  isFormSubmitted && (isGenderValid ? "is-valid" : "is-invalid")
+                }`}
                 checked={gender === "Female"}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  validateGender(e.target.value);
                   setGender(e.target.value);
                 }}
                 id="Female"
@@ -276,6 +290,13 @@ export default function Form({
                 value="Female"
               ></input>
             </div>
+            <span
+              className={`invalid-feedback ${
+                isFormSubmitted && (isGenderValid ? "" : "d-block")
+              }`}
+            >
+              Please choose your gender
+            </span>
           </div>
         </div>
         <div className={`row`}>
