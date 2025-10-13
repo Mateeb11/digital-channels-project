@@ -46,6 +46,13 @@ export default function Form({
       setEmail(items.data[editIndex].email);
       setAge(items.data[editIndex].age);
       setGender(items.data[editIndex].gender);
+
+      validateEmail(items.data[editIndex].email);
+      validateName(items.data[editIndex].name);
+      validateGender(items.data[editIndex].gender);
+      validateAge(items.data[editIndex].age);
+
+      setIsFileValid(true);
     }
   }, [edit]);
 
