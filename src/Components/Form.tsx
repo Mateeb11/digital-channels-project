@@ -183,7 +183,9 @@ export default function Form({
   };
 
   const validateName = (name: string) => {
-    name === "" ? setIsNameValid(false) : setIsNameValid(true);
+    name === "" || /\d/.test(name)
+      ? setIsNameValid(false)
+      : setIsNameValid(true);
   };
 
   const validateAge = (age: string) => {
@@ -233,7 +235,7 @@ export default function Form({
             title="Name"
             id="name"
           ></input>
-          <span className="invalid-feedback">Please enter your name</span>
+          <span className="invalid-feedback">Please enter a valid name</span>
         </div>
         <div className={`col`}>
           <label htmlFor="email" className={`form-label`}>
