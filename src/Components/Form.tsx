@@ -66,7 +66,11 @@ export default function Form({
   }, [alertStatus]);
 
   const fileHandler = (e: any) => {
-    if (e.target.files[0] === undefined) {
+    console.log(e.target.files[0]);
+    if (
+      e.target.files[0] === undefined ||
+      e.target.files[0].type !== "image/jpeg"
+    ) {
       setIsFileValid(false);
     } else {
       setIsFileValid(true);
@@ -336,12 +340,14 @@ export default function Form({
               isFormSubmitted && (isFileValid ? "is-valid" : "is-invalid")
             }`}
             type="file"
-            accept="image/*"
+            accept="image/jpeg"
             onChange={fileHandler}
             id="file"
             ref={fileInputRef}
           />
-          <span className="invalid-feedback">Please upload image</span>
+          <span className="invalid-feedback">
+            Please upload JPEG format image
+          </span>
         </div>
         <div
           className={`col align-self-end gap-3 d-flex justify-content-center`}
