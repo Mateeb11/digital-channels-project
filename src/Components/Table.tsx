@@ -11,6 +11,8 @@ export default function Table() {
   const [mode, setMode] = useState<boolean>(false);
   const [editIndex, setEditIndex] = useState<number>(0);
   const [isContextEmpty, setIsContextEmpty] = useState(true);
+  const [isPreviewFile, setIsPreviewFile] = useState(false);
+  const [previewFile, setPreviewFile] = useState("");
 
   const dispatch = useDispatch();
   const items = useSelector((state: any) => state.items);
@@ -52,15 +54,18 @@ export default function Table() {
 
   // this for previewing images in new tabs workaround
   const previewFileHandler = (file: string) => {
-    const win = window.open(file, "_blank");
-    win!.document.write(`
-        <html>
-          <head><title>Image</title></head>
-          <body style="margin:0; display:flex; align-items:center; justify-content:center; height:100vh; background:#000;">
-            <img src="${file}" style="max-width:90%; max-height:90%;" />
-          </body>
-        </html>
-    `);
+    // const win = window.open(file, "_blank");
+    // win!.document.write(`
+    //     <html>
+    //       <head><title>Image</title></head>
+    //       <body style="margin:0; display:flex; align-items:center; justify-content:center; height:100vh; background:#000;">
+    //         <img src="${file}" style="max-width:90%; max-height:90%;" />
+    //       </body>
+    //     </html>
+    // `);
+
+    setIsPreviewFile(true);
+    setPreviewFile(file);
   };
 
   // localStorage Code
@@ -79,6 +84,37 @@ export default function Table() {
     const secs = seconds % 60;
     return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
   };
+
+  const previewModal = (
+    <div
+      className="modal show d-block"
+      tabIndex={-1}
+      style={{ background: "rgba(0,0,0,0.5)" }}
+    >
+      <div className="modal-dialog modal-dialog-centered ">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Preview</h5>
+            <button
+              className="btn-close"
+              onClick={() => setIsPreviewFile(false)}
+            ></button>
+          </div>
+          <div className="modal-body">
+            <img src={previewFile} />
+          </div>
+          <div className="modal-footer">
+            <button
+              className="btn btn-secondary"
+              onClick={() => setIsPreviewFile(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 
   const tableContent = isContextEmpty ? (
     <>No Data</>
@@ -118,6 +154,7 @@ export default function Table() {
                 >
                   Preview
                 </button>
+                {isPreviewFile && previewModal}
               </td>
               <td>{formatTime(item.time)}</td>
               <td>
