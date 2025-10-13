@@ -72,7 +72,7 @@ export default function Form({
 
     setIsFormSubmitted(true);
 
-    if (!isEmailValid && !isNameValid && !isGenderValid && !isAgeValid) return;
+    if (!isEmailValid || !isNameValid || !isGenderValid || !isAgeValid) return;
 
     if (edit) {
       // localStorage Code
@@ -192,7 +192,7 @@ export default function Form({
               title="Name"
               id="name"
             ></input>
-            <span className="invalid-feedback">Please enter a name</span>
+            <span className="invalid-feedback">Please enter your name</span>
           </div>
           <div className={`col`}>
             <label htmlFor="email" className={`form-label`}>
@@ -217,25 +217,28 @@ export default function Form({
         </div>
         <div className={`row`}>
           <div className={`col`}>
-            <label htmlFor="ages" className={`form-label`}>
+            <label htmlFor="age" className={`form-label`}>
               Age
             </label>
-            <select
-              className={`form-select`}
-              value={age}
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+            <input
+              className={`form-control ${
+                isFormSubmitted && (isAgeValid ? "is-valid" : "is-invalid")
+              }`}
+              placeholder="Your Age"
+              value={age || ""}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                Number(e.target.value) < 1 ||
+                Number(e.target.value) > 130 ||
+                e.target.value === null
+                  ? setIsAgeValid(false)
+                  : setIsAgeValid(true);
                 setAge(e.target.value);
               }}
-              name="age"
-              id="ages"
-            >
-              <option value="" disabled>
-                Please Select Your Age Range
-              </option>
-              <option value="- 10">- 10</option>
-              <option value="11 - 35">11 - 35</option>
-              <option value="+ 35">+ 35</option>
-            </select>
+              type="number"
+              title="age"
+              id="age"
+            ></input>
+            <span className="invalid-feedback">Please enter your age</span>
           </div>
           <div className={`col align-self-center`}>
             <label htmlFor="gender" className={`form-label row ms-1`}>
