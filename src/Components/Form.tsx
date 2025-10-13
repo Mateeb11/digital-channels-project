@@ -85,7 +85,14 @@ export default function Form({
 
     setIsFormSubmitted(true);
 
-    if (!isEmailValid || !isNameValid || !isGenderValid || !isAgeValid) return;
+    if (
+      !isEmailValid ||
+      !isNameValid ||
+      !isGenderValid ||
+      !isAgeValid ||
+      !isFileValid
+    )
+      return;
 
     if (edit) {
       // localStorage Code
