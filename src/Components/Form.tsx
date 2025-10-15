@@ -66,6 +66,12 @@ export default function Form({
   }, [alertStatus]);
 
   const fileHandler = (e: any) => {
+    const fr = new FileReader();
+    fr.readAsDataURL(e.target.files[0]);
+
+    fr.onload = (e) => {
+      setFile(e.target!.result);
+    };
     if (
       e.target.files[0] === undefined ||
       e.target.files[0].type !== "image/jpeg"
@@ -73,12 +79,6 @@ export default function Form({
       setIsFileValid(false);
     } else {
       setIsFileValid(true);
-      const fr = new FileReader();
-      fr.readAsDataURL(e.target.files[0]);
-
-      fr.onload = (e) => {
-        setFile(e.target!.result);
-      };
     }
   };
 
@@ -174,6 +174,7 @@ export default function Form({
     setIsNameValid(false);
     setIsAgeValid(false);
     setIsGenderValid(false);
+    setIsFileValid(false);
   };
 
   const validateEmail = (email: string) => {
@@ -347,6 +348,9 @@ export default function Form({
           <span className="invalid-feedback">
             Please upload JPEG format image
           </span>
+          {isFileValid && file !== undefined && file !== null && (
+            <img src={file as string} className="w-50 h-75 mt-3 rounded" />
+          )}
         </div>
         <div
           className={`col align-self-end gap-3 d-flex justify-content-center`}
